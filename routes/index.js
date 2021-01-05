@@ -3,12 +3,8 @@ const webpush=require('web-push');
 const Datastore = require('nedb');
 const db = new Datastore();
 const router = express.Router();
+const config=require('../config');
 
-let vapidKeys=
-{
-"publicKey":`BEIWN2i8Nmy5TtmwvHR17T6DkeZseog-djS92NYRkEcaYFUDSytJAwudB6S9DBGQH4nZVbLJpEWIz_zvBLDmnN8`,
-"privateKey":`YyaThdyNKpWQpk0d8mnhOdlur2sTyQiCFkLlmkVFUQ4`
-}
 
  function triggerNotification(subscription,data)
  {
@@ -32,8 +28,8 @@ router.get('/app/test',function(req,res){
 router.post('/app/message',function(req,res){
   webpush.setVapidDetails(
     'mailto:example@yourdomain.org',
-    vapidKeys.publicKey,
-    vapidKeys.privateKey
+    config.PUBLIC_KEY,
+    config.PRIVATE_KEY
   );
 
   db.find({}, function (err, subscriptions) {
